@@ -20,30 +20,20 @@ const PERIOD_OPTIONS = ['覚えていない', '子どもの頃', '数年前', '�
 const RESUME_DELAY_MS = 3000
 
 const STORAGE_KEYS = {
-  referenced: 'discomfort-referenced'
-}
-
-const safeParse = <T,>(value: string | null, fallback: T): T => {
-  if (!value) return fallback
-  try {
-    return JSON.parse(value) as T
-  } catch {
-    return fallback
-  }
+  referencedPrefix: 'ref:'
 }
 
 const loadReferenced = (): Set<string> => {
   if (typeof window === 'undefined') return new Set()
-  const list = safeParse<string[]>(localStorage.getItem(STORAGE_KEYS.referenced), [])
-  return new Set(list)
-}
-
-const saveReferenced = (set: Set<string>) => {
-  if (typeof window === 'undefined') return
-  localStorage.setItem(
-    STORAGE_KEYS.referenced,
-    JSON.stringify(Array.from(set))
-  )
+  const result = new Set<string>()
+  for (let i = 0; i < localStorage.length; i += 1) {
+    const key = localStorage.key(i)
+    if (key && key.startsWith(STORAGE_KEYS.referencedPrefix)) {
+      const id = key.slice(STORAGE_KEYS.referencedPrefix.length)
+      if (id) result.add(id)
+    }
+  }
+  return result
 }
 
 const sortByNewest = (reports: Report[]) =>
@@ -293,13 +283,32 @@ function App() {
   }
 
   const handleReference = (report: Report) => {
-    if (referencedRef.current.has(report.id)) return
-    referencedRef.current.add(report.id)
-    saveReferenced(referencedRef.current)
-    setReferenceOverrides((prev) => {
-      const current = prev[report.id] ?? report.referenceCount
-      return { ...prev, [report.id]: current + 1 }
-    })
+    const reportId = report.id
+    console.log(`[ref] click reportId=${reportId}`)
+    const storageKey = `${STORAGE_KEYS.referencedPrefix}${reportId}`
+    const already = typeof window !== 'undefined' &&
+      localStorage.getItem(storageKey) === '1'
+    console.log('[ref] localStorage key/ref already?', storageKey, already)
+    if (already || referencedRef.current.has(reportId)) return
+    const url = `/api/reports/${reportId}/reference`
+    console.log('[ref] sending PATCH url=', url)
+    fetch(url, { method: 'PATCH' })
+      .then(async (response) => {
+        const bodyText = await response.text()
+        console.log('[ref] response status=', response.status, 'body=', bodyText)
+        if (!response.ok) {
+          throw new Error('Failed to update reference count.')
+        }
+        localStorage.setItem(storageKey, '1')
+        referencedRef.current.add(reportId)
+        setReferenceOverrides((prev) => {
+          const current = prev[reportId] ?? report.referenceCount
+          return { ...prev, [reportId]: current + 1 }
+        })
+      })
+      .catch((error) => {
+        console.error('[ref] request failed', error)
+      })
   }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
