@@ -118,6 +118,24 @@
   color: var(--ink-500);
 }
 
+.report-note {
+  margin-top: 48px;
+  padding: 28px 0 0;
+  border-top: 1px solid var(--ink-100);
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--ink-600);
+}
+
+.report-note p {
+  margin: 0 0 14px;
+  padding-left: 16px;
+}
+
+.report-note p:last-child {
+  margin-bottom: 0;
+}
+
 .stream {
   margin-top: 36px;
   position: relative;
