@@ -307,18 +307,17 @@ function App() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const media: MediaQueryList =
+      window.matchMedia('(prefers-reduced-motion: reduce)')
     const update = () => setReduceMotion(media.matches)
     update()
-    if ('addEventListener' in media) {
-      media.addEventListener('change', update)
-    } else {
+    media.addEventListener?.('change', update)
+    if (!media.addEventListener) {
       media.addListener(update)
     }
     return () => {
-      if ('removeEventListener' in media) {
-        media.removeEventListener('change', update)
-      } else {
+      media.removeEventListener?.('change', update)
+      if (!media.removeEventListener) {
         media.removeListener(update)
       }
     }
