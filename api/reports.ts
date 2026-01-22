@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+﻿import crypto from 'crypto'
 
 const LIMITS = {
   contentMax: 2000,
@@ -11,14 +11,7 @@ const LIMITS = {
   ]
 }
 
-const NG_WORDS = [
-  '死ね',
-  '殺す',
-  'fuck',
-  'porn',
-  'sex',
-  '暴力'
-]
+const NG_WORDS = ['死ね', '殺す', 'fuck', 'porn', 'sex', '暴力']
 
 const normalizeText = (value: string) =>
   value.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim()
@@ -67,14 +60,47 @@ const hasNgWord = (value: string) => {
   return NG_WORDS.some((word) => normalized.includes(normalizeText(word)))
 }
 
-export default async function handler(req: any, res: any) {
-  if (req.method !== 'POST') {
-    res.status(405).json({ message: 'Method Not Allowed' })
-    return
+const shuffle = <T,>(list: T[]) => {
+  const copy = [...list]
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[copy[i], copy[j]] = [copy[j], copy[i]]
   }
+  return copy
+}
 
+const fetchReports = async (url: string, key: string) => {
+  const response = await supabaseFetch(
+    url,
+    key,
+    'reports?select=id,name,period,content,reference_count,created_at&order=created_at.desc&limit=200',
+    { method: 'GET' }
+  )
+  if (!response.ok) {
+    throw new Error('Failed to fetch reports.')
+  }
+  const data = (await response.json()) as any[]
+  const latest = data.slice(0, 5)
+  const pool = data.slice(5)
+  const random = shuffle(pool).slice(0, 15)
+  return [...latest, ...random]
+}
+
+export default async function handler(req: any, res: any) {
   try {
     const { url, key } = getSupabaseConfig()
+
+    if (req.method === 'GET') {
+      const reports = await fetchReports(url, key)
+      res.status(200).json(reports)
+      return
+    }
+
+    if (req.method !== 'POST') {
+      res.status(405).json({ message: 'Method Not Allowed' })
+      return
+    }
+
     const ip = getClientIp(req) || 'unknown'
     const name = typeof req.body?.name === 'string' ? req.body.name : ''
     const period = typeof req.body?.period === 'string' ? req.body.period : ''

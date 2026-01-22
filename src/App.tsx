@@ -20,192 +20,8 @@ const PERIOD_OPTIONS = ['覚えていない', '子どもの頃', '数年前', '�
 const RESUME_DELAY_MS = 3000
 
 const STORAGE_KEYS = {
-  reports: 'discomfort-reports',
   referenced: 'discomfort-referenced'
 }
-
-const seedReports: Report[] = [
-  {
-    id: 'seed-01',
-    name: '匿名',
-    period: '最近',
-    content:
-      '夜、玄関のドアが少しだけ開いていることが続いた。鍵は閉めていたはずだが、毎回同じ角度で止まっている。',
-    referenceCount: 12,
-    createdAt: '2025-12-28T09:12:00.000Z'
-  },
-  {
-    id: 'seed-02',
-    name: 'I',
-    period: '数年前',
-    content:
-      '洗面台の鏡に、朝の自分とは少し違う水滴が付いていた。拭いたはずの位置だけが濡れている。',
-    referenceCount: 8,
-    createdAt: '2025-12-25T04:40:00.000Z'
-  },
-  {
-    id: 'seed-03',
-    name: 'M',
-    period: '子どもの頃',
-    content:
-      '学校から帰る道で、同じ犬に三回すれ違った気がする。角を曲がるたびにいた。',
-    referenceCount: 17,
-    createdAt: '2025-12-20T06:15:00.000Z'
-  },
-  {
-    id: 'seed-04',
-    name: '匿名',
-    period: '最近',
-    content:
-      '冷蔵庫の中の水の量が少しずつ減っていた。飲んだ記憶はない。',
-    referenceCount: 5,
-    createdAt: '2025-12-19T14:05:00.000Z'
-  },
-  {
-    id: 'seed-05',
-    name: 'S',
-    period: '覚えていない',
-    content:
-      '手帳の最後のページにだけ、今日の日付で短い線が引かれていた。自分の字ではない気がする。',
-    referenceCount: 9,
-    createdAt: '2025-12-16T11:02:00.000Z'
-  },
-  {
-    id: 'seed-06',
-    name: '匿名',
-    period: '数年前',
-    content:
-      '部屋の時計が一日だけ、正しい時間より三分早く進んでいた。翌日は元に戻っていた。',
-    referenceCount: 6,
-    createdAt: '2025-12-12T03:50:00.000Z'
-  },
-  {
-    id: 'seed-07',
-    name: 'K',
-    period: '子どもの頃',
-    content:
-      '夕方の公園で遊んでいたとき、帰る時間の音楽が二回鳴った。誰も気にしていない。',
-    referenceCount: 11,
-    createdAt: '2025-12-10T02:20:00.000Z'
-  },
-  {
-    id: 'seed-08',
-    name: '匿名',
-    period: '最近',
-    content:
-      '郵便受けに自分宛の封筒が入っていたが、中は白紙だった。封だけは新しかった。',
-    referenceCount: 7,
-    createdAt: '2025-12-08T08:44:00.000Z'
-  },
-  {
-    id: 'seed-09',
-    name: 'N',
-    period: '覚えていない',
-    content:
-      'いつも使う鉛筆の消しゴムが、昨日より少しだけ長い。削った覚えはない。',
-    referenceCount: 3,
-    createdAt: '2025-12-04T13:10:00.000Z'
-  },
-  {
-    id: 'seed-10',
-    name: '匿名',
-    period: '数年前',
-    content:
-      '電車のドアが閉まる直前に、車内に似た声が聞こえた。自分の声だと思った。',
-    referenceCount: 14,
-    createdAt: '2025-12-01T07:30:00.000Z'
-  },
-  {
-    id: 'seed-11',
-    name: 'T',
-    period: '最近',
-    content:
-      '買った覚えのない同じ靴下が、洗濯物に混ざっていた。サイズは合っていた。',
-    referenceCount: 4,
-    createdAt: '2025-11-29T10:22:00.000Z'
-  },
-  {
-    id: 'seed-12',
-    name: '匿名',
-    period: '子どもの頃',
-    content:
-      '図書館で借りた本に、以前読んだときのしおりが入っていた。借りた記憶はない。',
-    referenceCount: 10,
-    createdAt: '2025-11-26T01:18:00.000Z'
-  },
-  {
-    id: 'seed-13',
-    name: 'R',
-    period: '数年前',
-    content:
-      '部屋の隅に置いた箱の向きが、毎朝少しずつ変わっている。風は入らない。',
-    referenceCount: 2,
-    createdAt: '2025-11-21T09:55:00.000Z'
-  },
-  {
-    id: 'seed-14',
-    name: '匿名',
-    period: '覚えていない',
-    content:
-      '携帯の充電が満タンになると、通知音が二回だけ鳴る日があった。設定は変えていない。',
-    referenceCount: 13,
-    createdAt: '2025-11-18T05:12:00.000Z'
-  },
-  {
-    id: 'seed-15',
-    name: 'H',
-    period: '最近',
-    content:
-      '天気予報で雨と言っていたのに、窓の外は乾いたままだった。傘だけ濡れていた。',
-    referenceCount: 5,
-    createdAt: '2025-11-15T12:41:00.000Z'
-  },
-  {
-    id: 'seed-16',
-    name: '匿名',
-    period: '数年前',
-    content:
-      'コンビニのレシートに、買っていない商品が一行だけ印字されていた。値段は0円。',
-    referenceCount: 6,
-    createdAt: '2025-11-12T06:20:00.000Z'
-  },
-  {
-    id: 'seed-17',
-    name: 'Y',
-    period: '子どもの頃',
-    content:
-      '夕飯の時間にテレビが消え、数分後に同じ番組が最初から始まった。誰も操作していない。',
-    referenceCount: 9,
-    createdAt: '2025-11-08T02:04:00.000Z'
-  },
-  {
-    id: 'seed-18',
-    name: '匿名',
-    period: '覚えていない',
-    content:
-      '駅の階段の数を数えると、上りと下りで一段だけ違う。どちらも同じ幅に見える。',
-    referenceCount: 3,
-    createdAt: '2025-11-05T15:37:00.000Z'
-  },
-  {
-    id: 'seed-19',
-    name: 'U',
-    period: '数年前',
-    content:
-      '家の鍵の音が、たまに二重に鳴る。誰かが同時に回したように聞こえる。',
-    referenceCount: 7,
-    createdAt: '2025-11-02T07:06:00.000Z'
-  },
-  {
-    id: 'seed-20',
-    name: '匿名',
-    period: '最近',
-    content:
-      '毎朝同じ場所に置いているペンが、一度だけ机の真ん中にあった。触った覚えはない。',
-    referenceCount: 4,
-    createdAt: '2025-10-30T04:12:00.000Z'
-  }
-]
 
 const safeParse = <T,>(value: string | null, fallback: T): T => {
   if (!value) return fallback
@@ -214,16 +30,6 @@ const safeParse = <T,>(value: string | null, fallback: T): T => {
   } catch {
     return fallback
   }
-}
-
-const loadUserReports = (): Report[] => {
-  if (typeof window === 'undefined') return []
-  return safeParse<Report[]>(localStorage.getItem(STORAGE_KEYS.reports), [])
-}
-
-const saveUserReports = (reports: Report[]) => {
-  if (typeof window === 'undefined') return
-  localStorage.setItem(STORAGE_KEYS.reports, JSON.stringify(reports))
 }
 
 const loadReferenced = (): Set<string> => {
@@ -238,17 +44,6 @@ const saveReferenced = (set: Set<string>) => {
     STORAGE_KEYS.referenced,
     JSON.stringify(Array.from(set))
   )
-}
-
-const mergeReports = (): Report[] => {
-  const userReports = loadUserReports()
-  const merged = [...userReports, ...seedReports]
-  const seen = new Set<string>()
-  return merged.filter((report) => {
-    if (seen.has(report.id)) return false
-    seen.add(report.id)
-    return true
-  })
 }
 
 const sortByNewest = (reports: Report[]) =>
@@ -269,6 +64,18 @@ const pickDisplayReports = (reports: Report[]) => {
   return [...latest, ...random]
 }
 
+const mapApiReport = (report: any): Report => ({
+  id: String(report.id),
+  name: report.name ?? undefined,
+  period: report.period ?? '',
+  content: report.content ?? '',
+  referenceCount:
+    typeof report.reference_count === 'number'
+      ? report.reference_count
+      : Number(report.reference_count ?? 0),
+  createdAt: report.created_at ?? new Date().toISOString()
+})
+
 const createId = () => {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
     return crypto.randomUUID()
@@ -277,10 +84,8 @@ const createId = () => {
 }
 
 function App() {
-  const [allReports, setAllReports] = useState<Report[]>(() => mergeReports())
-  const [displayReports, setDisplayReports] = useState<Report[]>(() =>
-    pickDisplayReports(allReports)
-  )
+  const [allReports, setAllReports] = useState<Report[]>([])
+  const [displayReports, setDisplayReports] = useState<Report[]>([])
   const [activeInstanceId, setActiveInstanceId] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [formData, setFormData] = useState({
@@ -288,6 +93,10 @@ function App() {
     period: PERIOD_OPTIONS[0],
     content: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [loadError, setLoadError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [reduceMotion, setReduceMotion] = useState(false)
   const [referenceOverrides, setReferenceOverrides] = useState<
     Record<string, number>
@@ -330,6 +139,37 @@ function App() {
   useEffect(() => {
     reduceMotionRef.current = reduceMotion
   }, [reduceMotion])
+
+  useEffect(() => {
+    let isMounted = true
+    const fetchReports = async () => {
+      setIsLoading(true)
+      setLoadError('')
+      try {
+        const response = await fetch('/api/reports')
+        if (!response.ok) {
+          throw new Error('Failed to fetch reports')
+        }
+        const data = (await response.json()) as any[]
+        if (!isMounted) return
+        const mapped = Array.isArray(data) ? data.map(mapApiReport) : []
+        setAllReports(mapped)
+        setDisplayReports(mapped.length ? pickDisplayReports(mapped) : [])
+      } catch (error) {
+        console.error('[reports] fetch failed', error)
+        if (!isMounted) return
+        setLoadError('取得に失敗しました')
+        setAllReports([])
+        setDisplayReports([])
+      } finally {
+        if (isMounted) setIsLoading(false)
+      }
+    }
+    fetchReports()
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const pauseFromInteraction = () => {
     pauseUntilRef.current = performance.now() + RESUME_DELAY_MS
@@ -466,6 +306,7 @@ function App() {
     event.preventDefault()
     console.log('[submit] fired')
     if (!formData.content.trim()) return
+    setSubmitError('')
     const newReport: Report = {
       id: createId(),
       name: formData.name.trim() || '匿名',
@@ -474,6 +315,9 @@ function App() {
       referenceCount: 0,
       createdAt: new Date().toISOString()
     }
+    setIsSubmitting(true)
+    let requestFailed = false
+    let createdReport: Report | null = null
     try {
       console.log('[submit] request start', newReport)
       const response = await fetch('/api/reports', {
@@ -486,19 +330,30 @@ function App() {
         })
       })
       console.log('[submit] response status', response.status)
-      const bodyText = await response.text()
-      console.log('[submit] response body', bodyText)
+      const body = await response.json().catch(() => null)
+      console.log('[submit] response body', body)
+      if (!response.ok) {
+        requestFailed = true
+      } else if (body && typeof body === 'object') {
+        createdReport = mapApiReport(body)
+      }
     } catch (error) {
       console.error('[submit] request failed', error)
+      requestFailed = true
+    } finally {
+      setIsSubmitting(false)
     }
-    const stored = loadUserReports()
-    const nextStored = [newReport, ...stored]
-    saveUserReports(nextStored)
-    setAllReports((prev) => [newReport, ...prev])
+    if (requestFailed) {
+      console.error('[submit] request failed: response not ok')
+      setSubmitError('投稿内容を確認してください')
+      return
+    }
+    const reportToInsert = createdReport ?? newReport
+    setAllReports((prev) => [reportToInsert, ...prev])
     setDisplayReports((prev) => {
       const next = [
-        newReport,
-        ...prev.filter((report) => report.id !== newReport.id)
+        reportToInsert,
+        ...prev.filter((report) => report.id !== reportToInsert.id)
       ]
       return next.slice(0, 20)
     })
@@ -562,9 +417,14 @@ function App() {
               placeholder="淡々と記録する"
             />
           </label>
-          <button className="submit" type="submit">
-            記録する
+          <button className="submit" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? '報告中…' : '報告する'}
           </button>
+          {submitError && (
+            <p className="submit-error" role="status" aria-live="polite">
+              {submitError}
+            </p>
+          )}
         </form>
       </section>
 
@@ -577,106 +437,122 @@ function App() {
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
         >
-          <div className="stream-track" ref={trackRef}>
-            <div className="report-set" ref={setRef}>
-              {displayReports.map((report) => {
-                const instanceId = `${report.id}-a`
-                const isActive = instanceId === activeInstanceId
-                const isReferenced = referencedRef.current.has(report.id)
-                const count =
-                  referenceOverrides[report.id] ?? report.referenceCount
-                return (
-                  <article
-                    key={instanceId}
-                    className={`report-card ${
-                      activeInstanceId && !isActive ? 'dimmed' : ''
-                    } ${isActive ? 'active' : ''}`}
-                    onClick={() =>
-                      setActiveInstanceId((prev) => {
-                        const next = prev === instanceId ? null : instanceId
-                        if (!next) resumeNow()
-                        return next
-                      })
-                    }
-                  >
-                    <div className="report-meta">
-                      <span>{report.name ?? '匿名'}</span>
-                      <span>・</span>
-                      <span>{report.period}</span>
-                    </div>
-                    <p className={`report-content ${isActive ? 'expanded' : ''}`}>
-                      {report.content}
-                    </p>
-                    <div className="report-actions">
-                      <span className="reference-label">参照件数</span>
-                      <span className="reference-count">{count}</span>
-                      <button
-                        type="button"
-                        className={`check ${isReferenced ? 'checked' : ''}`}
-                        onPointerDown={(event) => event.stopPropagation()}
-                        onClick={(event) => {
-                          event.stopPropagation()
-                          handleReference(report)
-                        }}
-                        aria-label="参照として記録"
+          {loadError ? (
+            <div className="stream-placeholder">取得に失敗しました</div>
+          ) : isLoading ? (
+            <div className="stream-placeholder">読み込み中…</div>
+          ) : displayReports.length === 0 ? (
+            <div className="stream-placeholder">まだ報告はありません</div>
+          ) : (
+            <div className="stream-track" ref={trackRef}>
+              <div className="report-set" ref={setRef}>
+                {displayReports.map((report) => {
+                  const instanceId = `${report.id}-a`
+                  const isActive = instanceId === activeInstanceId
+                  const isReferenced = referencedRef.current.has(report.id)
+                  const count =
+                    referenceOverrides[report.id] ?? report.referenceCount
+                  return (
+                    <article
+                      key={instanceId}
+                      className={`report-card ${
+                        activeInstanceId && !isActive ? 'dimmed' : ''
+                      } ${isActive ? 'active' : ''}`}
+                      onClick={() =>
+                        setActiveInstanceId((prev) => {
+                          const next = prev === instanceId ? null : instanceId
+                          if (!next) resumeNow()
+                          return next
+                        })
+                      }
+                    >
+                      <div className="report-meta">
+                        <span>{report.name ?? '匿名'}</span>
+                        <span>・</span>
+                        <span>{report.period}</span>
+                      </div>
+                      <p
+                        className={`report-content ${
+                          isActive ? 'expanded' : ''
+                        }`}
                       >
-                        ✓
-                      </button>
-                    </div>
-                  </article>
-                )
-              })}
-            </div>
-            <div className="report-set" aria-hidden="true">
-              {displayReports.map((report) => {
-                const instanceId = `${report.id}-b`
-                const isActive = instanceId === activeInstanceId
-                const isReferenced = referencedRef.current.has(report.id)
-                const count =
-                  referenceOverrides[report.id] ?? report.referenceCount
-                return (
-                  <article
-                    key={instanceId}
-                    className={`report-card ${
-                      activeInstanceId && !isActive ? 'dimmed' : ''
-                    } ${isActive ? 'active' : ''}`}
-                    onClick={() =>
-                      setActiveInstanceId((prev) => {
-                        const next = prev === instanceId ? null : instanceId
-                        if (!next) resumeNow()
-                        return next
-                      })
-                    }
-                  >
-                    <div className="report-meta">
-                      <span>{report.name ?? '匿名'}</span>
-                      <span>・</span>
-                      <span>{report.period}</span>
-                    </div>
-                    <p className={`report-content ${isActive ? 'expanded' : ''}`}>
-                      {report.content}
-                    </p>
-                    <div className="report-actions">
-                      <span className="reference-label">参照件数</span>
-                      <span className="reference-count">{count}</span>
-                      <button
-                        type="button"
-                        className={`check ${isReferenced ? 'checked' : ''}`}
-                        onPointerDown={(event) => event.stopPropagation()}
-                        onClick={(event) => {
-                          event.stopPropagation()
-                          handleReference(report)
-                        }}
-                        aria-label="参照として記録"
+                        {report.content}
+                      </p>
+                      <div className="report-actions">
+                        <span className="reference-label">参照件数</span>
+                        <span className="reference-count">{count}</span>
+                        <button
+                          type="button"
+                          className={`check ${isReferenced ? 'checked' : ''}`}
+                          onPointerDown={(event) => event.stopPropagation()}
+                          onClick={(event) => {
+                            event.stopPropagation()
+                            handleReference(report)
+                          }}
+                          aria-label="参照として記録"
+                        >
+                          ✓
+                        </button>
+                      </div>
+                    </article>
+                  )
+                })}
+              </div>
+              <div className="report-set" aria-hidden="true">
+                {displayReports.map((report) => {
+                  const instanceId = `${report.id}-b`
+                  const isActive = instanceId === activeInstanceId
+                  const isReferenced = referencedRef.current.has(report.id)
+                  const count =
+                    referenceOverrides[report.id] ?? report.referenceCount
+                  return (
+                    <article
+                      key={instanceId}
+                      className={`report-card ${
+                        activeInstanceId && !isActive ? 'dimmed' : ''
+                      } ${isActive ? 'active' : ''}`}
+                      onClick={() =>
+                        setActiveInstanceId((prev) => {
+                          const next = prev === instanceId ? null : instanceId
+                          if (!next) resumeNow()
+                          return next
+                        })
+                      }
+                    >
+                      <div className="report-meta">
+                        <span>{report.name ?? '匿名'}</span>
+                        <span>・</span>
+                        <span>{report.period}</span>
+                      </div>
+                      <p
+                        className={`report-content ${
+                          isActive ? 'expanded' : ''
+                        }`}
                       >
-                        ✓
-                      </button>
-                    </div>
-                  </article>
-                )
-              })}
+                        {report.content}
+                      </p>
+                      <div className="report-actions">
+                        <span className="reference-label">参照件数</span>
+                        <span className="reference-count">{count}</span>
+                        <button
+                          type="button"
+                          className={`check ${isReferenced ? 'checked' : ''}`}
+                          onPointerDown={(event) => event.stopPropagation()}
+                          onClick={(event) => {
+                            event.stopPropagation()
+                            handleReference(report)
+                          }}
+                          aria-label="参照として記録"
+                        >
+                          ✓
+                        </button>
+                      </div>
+                    </article>
+                  )
+                })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
         {activeInstanceId && (
           <button
