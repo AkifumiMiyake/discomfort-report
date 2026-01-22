@@ -210,8 +210,6 @@
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, #000 86%, transparent);
-  mask-image: linear-gradient(90deg, #000 86%, transparent);
 }
 
 .report-content.expanded {
