@@ -462,8 +462,9 @@ function App() {
     })
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    console.log('[submit] fired')
     if (!formData.content.trim()) return
     const newReport: Report = {
       id: createId(),
@@ -472,6 +473,23 @@ function App() {
       content: formData.content.trim(),
       referenceCount: 0,
       createdAt: new Date().toISOString()
+    }
+    try {
+      console.log('[submit] request start', newReport)
+      const response = await fetch('/api/reports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: newReport.name,
+          period: newReport.period,
+          content: newReport.content
+        })
+      })
+      console.log('[submit] response status', response.status)
+      const bodyText = await response.text()
+      console.log('[submit] response body', bodyText)
+    } catch (error) {
+      console.error('[submit] request failed', error)
     }
     const stored = loadUserReports()
     const nextStored = [newReport, ...stored]
